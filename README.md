@@ -2,6 +2,9 @@
 
 This demo showcases a diary application using react-native-pager-view, expo-router, and react query with infinite scroll functionality and dynamic navigation. It demonstrates key features and highlights current issues looking to be resolved.
 
+## Video demo of issues
+https://www.loom.com/share/6f5877a86c464233ae9166ad37ad54e3?sid=18517d92-596d-427f-820e-151e216d0f00
+
 ## Product requirements
 
 - **Infinite Scroll**: Swipe left or right to navigate between days.
