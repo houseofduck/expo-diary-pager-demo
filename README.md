@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# Diary App Demo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This demo showcases a diary application using react-native-pager-view, expo-router, and react query with infinite scroll functionality and dynamic navigation. It demonstrates key features and highlights current issues looking to be resolved.
 
-## Get started
+## Product requirements
 
-1. Install dependencies
+- **Infinite Scroll**: Swipe left or right to navigate between days.
+- **Button Navigation**: Use arrow buttons to move forward or backward.
+- **Direct Navigation**: Navigate to specific dates using URL parameters.
+- **Efficient Data Fetching**: Loads data only for the current and adjacent pages.
+- **Smooth Transitions**: Aims for fluid animations between pages.
 
+## Current Issues
+
+We're actively working on resolving the following issues:
+
+1. **UI Freezing**: The interface may freeze after swiping through several pages. If this occurs, restart the app.
+2. **Animation Inconsistency**: Page transition animations may stop working after navigating through multiple pages.
+
+## Setup and Running the App
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. Run the iOS simulator:
    ```bash
-    npx expo start
+   npx expo run:ios
    ```
 
-In the output, you'll find options to open the app in a
+3. Once the app is running, navigate from the index page to the Diary page to explore the functionality.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Implementation Details
 
-## Get a fresh project
+### Navigation
 
-When you're ready, run:
+- Implements infinite scroll for day-to-day navigation.
+- Provides forward and backward navigation buttons.
+- Supports direct navigation to specific dates using Expo Router:
+  ```jsx
+  router.replace(`/diary/${day}`);
+  ```
 
-```bash
-npm run reset-project
-```
+### Data Fetching
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Fetches data for the current page and adjacent (previous and next) pages.
+- Aims to provide an instantaneous feel while avoiding over-fetching.
 
-## Learn more
+### User Experience Goals
 
-To learn more about developing your project with Expo, look at the following resources:
+- Smooth animations and transitions between pages.
+- Minimal jankiness in data display during transitions.
+- Pre-loading of adjacent page data before swipe animations occur.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Feedback and Contributions
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+We welcome feedback and contributions to improve this demo. Please feel free to open issues or submit pull requests with your suggestions or fixes.

@@ -63,6 +63,7 @@ const LazyLoadView = React.memo(
       <View style={styles.pageContainer}>
         <View style={styles.contentContainer}>
           <Text style={styles.dateText}>{format(date, "MMMM d, yyyy")}</Text>
+          <Text style={styles.dataText}>Data: {data !== undefined ? data : "Loading..."}</Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -319,5 +320,9 @@ const styles = StyleSheet.create({
   lazyPlaceholder: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  dataText: {
+    fontSize: 18,
+    marginBottom: 20,
   },
 });
