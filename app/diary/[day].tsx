@@ -56,7 +56,7 @@ const LazyLoadView = React.memo(
     }
 
     function handleRouteViaExpoRouter(day: string) {
-      router.push(`/diary/${day}`);
+      router.replace(`/diary/${day}`);
     }
 
     return (
