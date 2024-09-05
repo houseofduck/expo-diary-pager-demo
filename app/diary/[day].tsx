@@ -55,9 +55,8 @@ const LazyLoadView = React.memo(
       return <View style={styles.lazyPlaceholder} />;
     }
 
-    function handleRouteAndSetDayValue(day: string) {
+    function handleRouteViaExpoRouter(day: string) {
       router.push(`/diary/${day}`);
-      setDayValue(day);
     }
 
     return (
@@ -67,31 +66,31 @@ const LazyLoadView = React.memo(
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleRouteAndSetDayValue("2021-01-05")}
+              onPress={() => handleRouteViaExpoRouter("2021-01-05")}
             >
               <Text>Go to 5th of January 2021</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleRouteAndSetDayValue("2023-01-05")}
+              onPress={() => handleRouteViaExpoRouter("2023-01-05")}
             >
               <Text>Go to 5th of January 2023</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleRouteAndSetDayValue("today")}
+              onPress={() => handleRouteViaExpoRouter("today")}
             >
               <Text>Go to today</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleRouteAndSetDayValue("tomorrow")}
+              onPress={() => handleRouteViaExpoRouter("tomorrow")}
             >
               <Text>Go to tomorrow</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleRouteAndSetDayValue("yesterday")}
+              onPress={() => handleRouteViaExpoRouter("yesterday")}
             >
               <Text>Go to yesterday</Text>
             </TouchableOpacity>
