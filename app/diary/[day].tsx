@@ -24,12 +24,16 @@ const LazyLoadView = React.memo(
     setDayValue,
     index,
     styles,
+    navigateBackward,
+    navigateForward,
   }: {
     date: Date;
     currentIndex: number;
     index: number;
     styles: any;
     setDayValue: (day: string) => void;
+    navigateBackward: () => void;
+    navigateForward: () => void;
   }) => {
     const shouldRefetch = currentIndex === index;
 
@@ -58,22 +62,46 @@ const LazyLoadView = React.memo(
 
     return (
       <View style={styles.pageContainer}>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity onPress={() => handleRouteAndSetDayValue("2021-01-05")}>
-            <Text>Go to 5th of January 2021</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleRouteAndSetDayValue("2023-01-05")}>
-            <Text>Go to 5th of January 2023</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleRouteAndSetDayValue("today")}>
-            <Text>Go to today</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleRouteAndSetDayValue("tomorrow")}>
-            <Text>Go to tomorrow</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleRouteAndSetDayValue("yesterday")}>
-            <Text>Go to yesterday</Text>
-          </TouchableOpacity>
+        <View style={styles.contentContainer}>
+          <Text style={styles.dateText}>{format(date, "MMMM d, yyyy")}</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRouteAndSetDayValue("2021-01-05")}
+            >
+              <Text>Go to 5th of January 2021</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRouteAndSetDayValue("2023-01-05")}
+            >
+              <Text>Go to 5th of January 2023</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRouteAndSetDayValue("today")}
+            >
+              <Text>Go to today</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRouteAndSetDayValue("tomorrow")}
+            >
+              <Text>Go to tomorrow</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleRouteAndSetDayValue("yesterday")}
+            >
+              <Text>Go to yesterday</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={navigateBackward}>
+              <Text>Previous Day</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={navigateForward}>
+              <Text>Next Day</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -187,6 +215,36 @@ const DiaryDay = () => {
     [buffer, bufferSize]
   );
 
+  const navigateBackward = useCallback(() => {
+    let newIndex = currentIndex - 1;
+    if (newIndex === 0) {
+      let newBuffer = buffer.map((index) => index - 1);
+      setBuffer(newBuffer);
+      setTimeout(() => {
+        pagerRef.current?.setPageWithoutAnimation(1);
+        setCurrentIndex(1);
+      }, 0);
+    } else {
+      pagerRef.current?.setPage(newIndex);
+      setCurrentIndex(newIndex);
+    }
+  }, [currentIndex, buffer]);
+
+  const navigateForward = useCallback(() => {
+    let newIndex = currentIndex + 1;
+    if (newIndex === bufferSize - 1) {
+      let newBuffer = buffer.map((index) => index + 1);
+      setBuffer(newBuffer);
+      setTimeout(() => {
+        pagerRef.current?.setPageWithoutAnimation(bufferSize - 2);
+        setCurrentIndex(bufferSize - 2);
+      }, 0);
+    } else {
+      pagerRef.current?.setPage(newIndex);
+      setCurrentIndex(newIndex);
+    }
+  }, [currentIndex, buffer, bufferSize]);
+
   useEffect(() => {
     const initialBuffer = buffer.map((offset) => offset);
     setBuffer(initialBuffer);
@@ -214,6 +272,8 @@ const DiaryDay = () => {
           index={idx}
           currentIndex={currentIndex}
           styles={styles}
+          navigateBackward={navigateBackward}
+          navigateForward={navigateForward}
         />
       ))}
     </PagerView>
@@ -229,6 +289,27 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  dateText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  buttonsContainer: {
+    alignItems: "center",
+  },
+  button: {
+    marginVertical: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
   },
   title: {
     fontSize: 18,
